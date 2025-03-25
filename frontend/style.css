@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.station-input {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 400px;
+    text-align: left;
+}
+
+.station-input label {
+    font-size: 16px;  /* Увеличиваем размер шрифта для этих полей */
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.station-input input {
+    padding: 10px;
+    border-radius: 25px;
+    border: 2px solid #ddd;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.station-input input:focus {
+    border-color: #4CAF50;
+}
+
+button#toggleMapBtnFrom, button#toggleMapBtnTo {
+    font-size: 12px;
+    background-color: transparent;
+    color: #555;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    margin-top: 5px;
+}
+
+#mapFrom, #mapTo {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;  /* Увеличиваем высоту карты */
+    background-color: #e0e0e0;
+    margin-top: 5px;
+    text-align: center;
+    display: none;
+}
+
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80%;
+    max-width: 400px;
+}
+
+.calendar-container label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+#date {
+    padding: 10px;
+    border-radius: 25px;
+    border: 2px solid #ddd;
+    font-size: 16px;
+    width: 100%;
+}
+
+#schedule {
+    margin-top: 30px;
+    text-align: center;
+}
+
+#schedule ul {
+    list-style: none;
+    padding: 0;
+}
+
+#schedule li {
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .search-container {
+        gap: 15px;
+    }
+
+    .station-input input {
+        width: 90%;
+    }
+}
