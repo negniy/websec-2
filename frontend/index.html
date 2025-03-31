@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Расписание поездов</title>
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
 </head>
 <body>
     <header>
         <h1>Поиск расписания электричек</h1>
     </header>
-
     <div class="search-container">
         <div class="station-input">
             <label for="fromStation">Отправление</label>
             <input type="text" id="fromStation" placeholder="Введите станцию отправления">
             <!-- Кнопка для сворачивания карты будет здесь -->
             <button id="toggleMapBtnFrom">Развернуть карту</button>
-            <div id="mapFrom">
-                <p>Здесь будет карта для станции отправления</p>
-            </div>
+            <div id="map" style="width: 600px; height: 400px"></div>
         </div>
 
         <div class="station-input">
@@ -27,15 +28,13 @@
             <input type="text" id="toStation" placeholder="Введите станцию назначения">
             <!-- Кнопка для сворачивания карты будет здесь -->
             <button id="toggleMapBtnTo">Развернуть карту</button>
-            <div id="mapTo">
-                <p>Здесь будет карта для станции назначения</p>
+            <div id="map" style="width: 600px; height: 400px">
             </div>
         </div>
 
         <div class="calendar-container">
             <label for="date">Выберите дату</label>
-            <input type="date" id="date">
-        </div>
+            <input type="date" id="date"></div>
 
         <button id="searchBtn">Найти поезда</button>
     </div>
@@ -46,5 +45,14 @@
     </div>
 
     <script src="script.js"></script>
+    <script type="text/javascript">
+        function init(){
+          let myMap = new ymaps.Map("map", {
+            center: [55.76, 37.64],
+            zoom: 7
+          });
+        }
+        ymaps.ready(init);
+    </script>
 </body>
 </html>

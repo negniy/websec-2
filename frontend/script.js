@@ -17,29 +17,57 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 });
 
 function fetchTrainsThroughStation(station, date) {
-    // Здесь будет код для запроса всех поездов через станцию через ваш бэкенд
-    console.log(`Поезда через станцию: ${station}`);
+    // Формируем URL для запроса к бэкенду
+    const url = `http://localhost:8080/api/trains/through/?station=${station}&date=${date}`;
 
-    // Симуляция получения данных
-    const trains = [
-        { number: '1203', from: 'Самара', to: 'Москва', departureTime: '12:30', arrivalTime: '13:45', date: date },
-        { number: '1305', from: 'Самара', to: 'Санкт-Петербург', departureTime: '14:45', arrivalTime: '16:00', date: date }
-    ];
-
-    displayTrains(trains);
+    // Отправляем GET-запрос
+    fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка при получении данных');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            displayTrains(data);
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            alert('Не удалось загрузить данные');
+        });
 }
 
+
 function fetchTrainRoute(fromStation, toStation, date) {
-    // Здесь будет код для запроса расписания между двумя станциями через ваш бэкенд
-    console.log(`Поезда между станциями: ${fromStation} и ${toStation}`);
+    const url = `http://localhost:8080/api/trains/route/?from=${fromStation}&to=${toStation}&date=${date}`;
+    
+    fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Ошибка запроса: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(data => displayTrains(data))
+    .catch(error => console.error('Ошибка при выполнении запроса:', error));
+}
 
-    // Симуляция получения данных для маршрута
-    const trains = [
-        { number: '1501', from: fromStation, to: toStation, departureTime: '10:00', arrivalTime: '12:00', date: date },
-        { number: '1604', from: fromStation, to: toStation, departureTime: '13:15', arrivalTime: '15:15', date: date }
-    ];
-
-    displayTrains(trains);
+function formatTime(dateString) {
+    const date = new Date(dateString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
 }
 
 function displayTrains(trains) {
@@ -49,11 +77,15 @@ function displayTrains(trains) {
     if (trains.length > 0) {
         let scheduleHTML = '<ul>';
         trains.forEach(train => {
+            const stationTo = train.station_to ? train.station_to : train.station_from;
+            const arrival = train.arrival_time ? `Прибытие: ${stationTo} - ${formatTime(train.arrival_time)}` : '';
+            const departure = train.departure_time ? `Отправление: ${train.station_from} - ${formatTime(train.departure_time)}` : '';
+        
             scheduleHTML += `
                 <li>
-                    <p>Поезд №${train.number} (${train.from} - ${train.to})</p>
-                    <p>Прибытие: ${train.from} : ${train.departureTime} ${train.date}</p>
-                    <p>Отправление: ${train.to} : ${train.arrivalTime} ${train.date}</p>
+                    <p>Поезд №${train.number} (${train.title})</p>
+                    ${arrival ? `<p>${arrival}</p>` : ''}
+                    ${departure ? `<p>${departure}</p>` : ''}
                 </li>
             `;
         });
@@ -63,6 +95,8 @@ function displayTrains(trains) {
         scheduleDiv.innerHTML += '<p>Поезда не найдены для данного маршрута.</p>';
     }
 }
+
+
 
 // Логика для отображения карты
 document.getElementById('toggleMapBtnFrom').addEventListener('click', function() {

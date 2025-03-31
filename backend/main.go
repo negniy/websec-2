@@ -1,61 +1,50 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
+	"time"
+
+	api "backend/API"
+	"backend/handlers"
+
+	"github.com/gorilla/mux"
 )
 
-const apiURL = "https://api.rasp.yandex.net/v3.0/search/"
+func enableCORS(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-func getTrainSchedule() (map[string]interface{}, error) {
-	// Параметры запроса
-	params := url.Values{}
-	params.Add("apikey", "4d138079-8d8f-4e5f-8b60-8471062e5365")
-	params.Add("from", "c146")
-	params.Add("to", "c213")
-	params.Add("date", "2025-09-02")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
-	// Формируем URL с параметрами
-	fullURL := apiURL + "?" + params.Encode()
+		next.ServeHTTP(w, r)
+	})
+}
 
-	// Отправляем GET-запрос
-	resp, err := http.Get(fullURL)
-	if err != nil {
-		return nil, fmt.Errorf("ошибка при запросе: %v", err)
-	}
-	defer resp.Body.Close()
-
-	// Читаем тело ответа
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("ошибка при чтении ответа: %v", err)
-	}
-
-	// Проверка статуса ответа
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("ошибка: получен статус %d", resp.StatusCode)
-	}
-
-	// Парсим JSON-ответ
-	var result map[string]interface{}
-	if err := json.Unmarshal(body, &result); err != nil {
-		return nil, fmt.Errorf("ошибка при разборе JSON: %v", err)
-	}
-
-	return result, nil
+func init() {
+	api.LoadStation()
+	log.Println(api.Stations)
 }
 
 func main() {
-	// Получаем расписание
-	scheduleData, err := getTrainSchedule()
-	if err != nil {
-		log.Fatalf("Ошибка: %v", err)
+	router := mux.NewRouter()
+
+	router.Use(enableCORS)
+
+	router.HandleFunc("/api/trains/through/", handlers.FetchTrainsThroughStation)
+	router.HandleFunc("/api/trains/route/", handlers.FetchTrainRoute)
+
+	srv := &http.Server{
+		Handler:      router,
+		Addr:         ":8080",
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
 	}
 
-	// Выводим данные
-	fmt.Printf("Расписание: %+v\n", scheduleData)
+	fmt.Println("Сервер слушает на порту 8080...")
+	if err := srv.ListenAndServe(); err != nil {
+		fmt.Println("Ошибка при запуске сервера:", err)
+	}
 }
