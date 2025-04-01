@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -25,7 +24,7 @@ func enableCORS(next http.Handler) http.Handler {
 
 func init() {
 	api.LoadStation()
-	log.Println(api.Stations)
+	//log.Println(api.Stations)
 }
 
 func main() {

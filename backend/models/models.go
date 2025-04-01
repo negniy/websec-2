@@ -10,8 +10,6 @@ type Train struct {
 }
 
 type Station struct {
-	Title     string  `json:"title"`
-	Code      string  `json:"code"`
-	Longitude float64 `json:"longitude"`
-	Latitude  float64 `json:"latitude"`
+	Title string `json:"title"`
+	Code  string `json:"code"`
 }

@@ -96,27 +96,15 @@ function displayTrains(trains) {
     }
 }
 
-
-
-// Логика для отображения карты
-document.getElementById('toggleMapBtnFrom').addEventListener('click', function() {
-    const mapDiv = document.getElementById('mapFrom');
-    if (mapDiv.style.display === 'none') {
-        mapDiv.style.display = 'block';
-        this.innerText = 'Свернуть карту';
+document.getElementById('swapStationsBtn').addEventListener('click', function() {
+    const fromStation = document.getElementById('fromStation');
+    const toStation = document.getElementById('toStation');
+    
+    if (fromStation.value && toStation.value) {
+        const temp = fromStation.value;
+        fromStation.value = toStation.value;
+        toStation.value = temp;
     } else {
-        mapDiv.style.display = 'none';
-        this.innerText = 'Развернуть карту';
-    }
-});
-
-document.getElementById('toggleMapBtnTo').addEventListener('click', function() {
-    const mapDiv = document.getElementById('mapTo');
-    if (mapDiv.style.display === 'none') {
-        mapDiv.style.display = 'block';
-        this.innerText = 'Свернуть карту';
-    } else {
-        mapDiv.style.display = 'none';
-        this.innerText = 'Развернуть карту';
+        alert("Пожалуйста, введите обе станции перед тем, как менять их местами.");
     }
 });

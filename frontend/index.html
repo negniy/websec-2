@@ -1,58 +1,52 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Расписание поездов</title>
-    <link rel="stylesheet" href="style.css">
-
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Расписание поездов</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Подключаем Font Awesome для иконок стрелок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
-    <header>
-        <h1>Поиск расписания электричек</h1>
-    </header>
-    <div class="search-container">
-        <div class="station-input">
-            <label for="fromStation">Отправление</label>
-            <input type="text" id="fromStation" placeholder="Введите станцию отправления">
-            <!-- Кнопка для сворачивания карты будет здесь -->
-            <button id="toggleMapBtnFrom">Развернуть карту</button>
-            <div id="map" style="width: 600px; height: 400px"></div>
-        </div>
+  <header>
+    <h1>Поиск расписания электричек</h1>
+  </header>
 
-        <div class="station-input">
-            <label for="toStation">Назначение</label>
-            <input type="text" id="toStation" placeholder="Введите станцию назначения">
-            <!-- Кнопка для сворачивания карты будет здесь -->
-            <button id="toggleMapBtnTo">Развернуть карту</button>
-            <div id="map" style="width: 600px; height: 400px">
-            </div>
-        </div>
-
-        <div class="calendar-container">
-            <label for="date">Выберите дату</label>
-            <input type="date" id="date"></div>
-
-        <button id="searchBtn">Найти поезда</button>
+  <!-- Общий контейнер для всех инпутов -->
+  <div class="input-container">
+    <!-- Контейнер для станций ввода с кнопкой swap -->
+    <div class="stations-wrapper">
+      <div class="station-input">
+        <label for="fromStation">Отправление</label>
+        <input type="text" id="fromStation" placeholder="Введите станцию отправления">
+      </div>
+      <div class="station-input">
+        <label for="toStation">Назначение</label>
+        <input type="text" id="toStation" placeholder="Введите станцию назначения">
+      </div>
+      <!-- Кнопка для смены местами -->
+      <button id="swapStationsBtn" type="button" title="Поменять станции местами">
+        <i class="fas fa-arrow-up"></i>
+        <i class="fas fa-arrow-down"></i>
+      </button>
     </div>
 
-    <div id="schedule">
-        <h2>Поезда:</h2>
-        <!-- Здесь будет отображаться список поездов -->
+    <!-- Контейнер для календаря -->
+    <div class="calendar-container">
+      <label for="date">Выберите дату</label>
+      <input type="date" id="date">
     </div>
 
-    <script src="script.js"></script>
-    <script type="text/javascript">
-        function init(){
-          let myMap = new ymaps.Map("map", {
-            center: [55.76, 37.64],
-            zoom: 7
-          });
-        }
-        ymaps.ready(init);
-    </script>
+    <!-- Кнопка поиска -->
+    <button id="searchBtn">Найти поезда</button>
+  </div>
+
+  <div id="schedule">
+    <h2>Поезда:</h2>
+    <!-- Здесь появится список поездов -->
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

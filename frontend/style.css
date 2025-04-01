@@ -2,141 +2,135 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
+  }
+  body {
+    font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     color: #333;
     padding: 20px;
-}
-
-header {
+  }
+  header {
     text-align: center;
     margin-bottom: 30px;
-}
-
-h1 {
+  }
+  h1 {
     font-size: 2rem;
-    color: #333;
     margin-bottom: 20px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 25px;
-    padding: 12px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-.search-container {
+  }
+  .input-container {
+    width: 400px;
+    max-width: 90%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.station-input {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    max-width: 400px;
-    text-align: left;
-}
-
-.station-input label {
-    font-size: 16px;  /* Увеличиваем размер шрифта для этих полей */
-    margin-bottom: 5px;
+    gap: 5px;
+  }
+  .stations-wrapper {
+    position: relative;
+  }
+  .station-input {
+    margin-bottom: 10px;
+  }
+  .station-input label {
+    font-size: 17px;
     color: #555;
-}
-
-.station-input input {
+    margin-bottom: 5px;
+    display: block;
+  }
+  .station-input input {
+    width: 100%;
     padding: 10px;
     border-radius: 25px;
     border: 2px solid #ddd;
-    font-size: 16px;
+    font-size: 15px;
     outline: none;
     transition: border-color 0.3s ease;
-}
-
-.station-input input:focus {
+  }
+  .station-input input:focus {
     border-color: #4CAF50;
-}
-
-button#toggleMapBtnFrom, button#toggleMapBtnTo {
-    font-size: 12px;
-    background-color: transparent;
-    color: #555;
+  }
+  #swapStationsBtn {
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%);
+    background: none;
     border: none;
+    color: #4CAF50;
     cursor: pointer;
-    text-align: left;
-    margin-top: 5px;
-}
-
-#mapFrom, #mapTo {
-    width: 100%;
-    max-width: 400px;
-    height: 250px;  /* Увеличиваем высоту карты */
-    background-color: #e0e0e0;
-    margin-top: 5px;
-    text-align: center;
-    display: none;
-}
-
-.calendar-container {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0;
+  }
+  #swapStationsBtn:hover {
+    color: #45a049;
+  }
+  #swapStationsBtn i {
+    font-size: 15px;
+    line-height: 1;
+    margin: 0 1px;
+  }
+  .calendar-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: 80%;
-    max-width: 400px;
-}
-
-.calendar-container label {
-    font-size: 14px;
+    margin-top: 0px;
+  }
+  .calendar-container label {
+    font-size: 16px;
     color: #555;
     margin-bottom: 5px;
-}
-
-#date {
+  }
+  #date {
     padding: 10px;
     border-radius: 25px;
     border: 2px solid #ddd;
-    font-size: 16px;
+    font-size: 17px;
     width: 100%;
-}
-
-#schedule {
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  #date:focus {
+    border-color: #4CAF50;
+  }
+  #searchBtn {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 17px;
+    border: none;
+    border-radius: 25px;
+    padding: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+  }
+  #searchBtn:hover {
+    background-color: #45a049;
+  }
+  #schedule {
     margin-top: 30px;
     text-align: center;
-}
-
-#schedule ul {
+  }
+  #schedule ul {
     list-style: none;
     padding: 0;
-}
-
-#schedule li {
+  }
+  #schedule li {
     background-color: #fff;
     padding: 12px;
     border-radius: 10px;
     margin-bottom: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 768px) {
-    .search-container {
-        gap: 15px;
+  }
+  @media (max-width: 600px) {
+    #swapStationsBtn {
+      font-size: 14px;
+      right: -15px;
     }
-
-    .station-input input {
-        width: 90%;
+    #swapStationsBtn i {
+      font-size: 14px;
     }
-}
+  }
+  
