@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Расписание поездов</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Подключаем Font Awesome для иконок стрелок -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
@@ -13,38 +12,34 @@
     <h1>Поиск расписания электричек</h1>
   </header>
 
-  <!-- Общий контейнер для всех инпутов -->
   <div class="input-container">
-    <!-- Контейнер для станций ввода с кнопкой swap -->
     <div class="stations-wrapper">
       <div class="station-input">
         <label for="fromStation">Отправление</label>
-        <input type="text" id="fromStation" placeholder="Введите станцию отправления">
+        <input type="text" id="fromStation" list="fromStationList" placeholder="Введите станцию отправления">
+        <div id="stationsListFrom"></div>
       </div>
       <div class="station-input">
         <label for="toStation">Назначение</label>
-        <input type="text" id="toStation" placeholder="Введите станцию назначения">
+        <input type="text" id="toStation" list="toStationList" placeholder="Введите станцию назначения">
+        <div id="stationsListTo"></div>
       </div>
-      <!-- Кнопка для смены местами -->
       <button id="swapStationsBtn" type="button" title="Поменять станции местами">
         <i class="fas fa-arrow-up"></i>
         <i class="fas fa-arrow-down"></i>
       </button>
     </div>
 
-    <!-- Контейнер для календаря -->
     <div class="calendar-container">
       <label for="date">Выберите дату</label>
       <input type="date" id="date">
     </div>
 
-    <!-- Кнопка поиска -->
     <button id="searchBtn">Найти поезда</button>
   </div>
 
   <div id="schedule">
     <h2>Поезда:</h2>
-    <!-- Здесь появится список поездов -->
   </div>
 
   <script src="script.js"></script>

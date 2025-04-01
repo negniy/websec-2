@@ -1,3 +1,14 @@
+let stationTitles = [];
+
+fetch('http://localhost:8080/api/stations')
+  .then(response => response.json())
+  .then(data => {
+    stationTitles = data.map(station => station.title);
+  })
+  .catch(error => {
+    console.error('Ошибка при получении списка станций:', error);
+});
+
 document.getElementById('searchBtn').addEventListener('click', function() {
     const fromStation = document.getElementById('fromStation').value.trim();
     const toStation = document.getElementById('toStation').value.trim();
@@ -108,3 +119,33 @@ document.getElementById('swapStationsBtn').addEventListener('click', function() 
         alert("Пожалуйста, введите обе станции перед тем, как менять их местами.");
     }
 });
+
+function filterStations(query) {
+    return stationTitles.filter(station => station.toLowerCase().startsWith(query.toLowerCase()));
+  }
+  
+  function updateSuggestions(inputId, suggestionsId) {
+    const input = document.getElementById(inputId);
+    const suggestionsList = document.getElementById(suggestionsId);
+    const query = input.value;
+    suggestionsList.innerHTML = '';
+    if(query.length === 0) return;
+    const filtered = filterStations(query).slice();
+    filtered.forEach(station => {
+      const div = document.createElement('div');
+      div.textContent = station;
+      div.addEventListener('click', function() {
+        input.value = station;
+        suggestionsList.innerHTML = '';
+      });
+      suggestionsList.appendChild(div);
+    });
+  }
+  
+  document.getElementById('fromStation').addEventListener('input', function() {
+    updateSuggestions('fromStation', 'stationsListFrom');
+  });
+  
+  document.getElementById('toStation').addEventListener('input', function() {
+    updateSuggestions('toStation', 'stationsListTo');
+  });
